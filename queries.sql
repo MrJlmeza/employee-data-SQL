@@ -48,7 +48,7 @@ FROM employees
 WHERE first_name = 'Hercules'
 AND last_name LIKE 'B%';
 
--- .6 Employees in the Sales department
+-- 6. Employees in the Sales department
 SELECT  employees.emp_no,
         employees.last_name,
         employees.first_name,
@@ -60,3 +60,22 @@ INNER JOIN departments
 ON (dept_employee.dept_no = departments.dept_no)
 WHERE departments.dept_name = 'Sales'
 ORDER BY employees.emp_no;
+
+-- 7. Employees in Sales and Development departments
+SELECT  employees.emp_no,
+        employees.last_name,
+        employees.first_name,
+        departments.dept_name
+FROM employees 
+INNER JOIN dept_employee
+ON (employees.emp_no = dept_employee.emp_no)
+INNER JOIN departments
+ON (dept_employee.dept_no = departments.dept_no)
+WHERE departments.dept_name IN ('Sales', 'Development')
+ORDER BY employees.emp_no;
+
+-- 8. The frequency of employee last names
+SELECT last_name, COUNT(last_name)
+FROM employees
+GROUP BY last_name
+ORDER BY COUNT(last_name) DESC;
